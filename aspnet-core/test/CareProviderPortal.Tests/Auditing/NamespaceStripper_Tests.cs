@@ -1,0 +1,35 @@
+﻿using CareProviderPortal.Auditing;
+using CareProviderPortal.Test.Base;
+using Shouldly;
+using Xunit;
+
+namespace CareProviderPortal.Tests.Auditing
+{
+    // ReSharper disable once InconsistentNaming
+    public class NamespaceStripper_Tests: AppTestBase
+    {
+        private readonly INamespaceStripper _namespaceStripper;
+
+        public NamespaceStripper_Tests()
+        {
+            _namespaceStripper = Resolve<INamespaceStripper>();
+        }
+
+        [Fact]
+        public void Should_Stripe_Namespace()
+        {
+            var controllerName = _namespaceStripper.StripNameSpace("CareProviderPortal.Web.Controllers.HomeController");
+            controllerName.ShouldBe("HomeController");
+        }
+
+        [Theory]
+        [InlineData("CareProviderPortal.Auditing.GenericEntityService`1[[CareProviderPortal.Storage.BinaryObject, CareProviderPortal.Core, Version=1.10.1.0, Culture=neutral, PublicKeyToken=null]]", "GenericEntityService<BinaryObject>")]
+        [InlineData("CompanyName.ProductName.Services.Base.EntityService`6[[CompanyName.ProductName.Entity.Book, CompanyName.ProductName.Core, Version=1.10.1.0, Culture=neutral, PublicKeyToken=null],[CompanyName.ProductName.Services.Dto.Book.CreateInput, N...", "EntityService<Book, CreateInput>")]
+        [InlineData("CareProviderPortal.Auditing.XEntityService`1[CareProviderPortal.Auditing.AService`5[[CareProviderPortal.Storage.BinaryObject, CareProviderPortal.Core, Version=1.10.1.0, Culture=neutral, PublicKeyToken=null],[CareProviderPortal.Storage.TestObject, CareProviderPortal.Core, Version=1.10.1.0, Culture=neutral, PublicKeyToken=null],]]", "XEntityService<AService<BinaryObject, TestObject>>")]
+        public void Should_Stripe_Generic_Namespace(string serviceName, string result)
+        {
+            var genericServiceName = _namespaceStripper.StripNameSpace(serviceName);
+            genericServiceName.ShouldBe(result);
+        }
+    }
+}
