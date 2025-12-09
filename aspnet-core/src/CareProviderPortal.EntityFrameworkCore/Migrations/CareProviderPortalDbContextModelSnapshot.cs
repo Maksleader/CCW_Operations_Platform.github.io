@@ -1769,7 +1769,7 @@ namespace CareProviderPortal.Migrations
 
                     b.HasIndex("TenantId", "UserId", "ReadState");
 
-                    b.ToTable("AppChatMessages", (string)null);
+                    b.ToTable("AppChatMessages");
                 });
 
             modelBuilder.Entity("CareProviderPortal.Friendships.Friendship", b =>
@@ -2045,7 +2045,7 @@ namespace CareProviderPortal.Migrations
 
                     b.HasIndex("TenancyName");
 
-                    b.ToTable("AbpTenants", (string)null);
+                    b.ToTable("AbpTenants");
                 });
 
             modelBuilder.Entity("CareProviderPortal.Storage.BinaryObject", b =>

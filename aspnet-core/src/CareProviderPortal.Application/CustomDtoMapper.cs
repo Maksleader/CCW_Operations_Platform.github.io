@@ -164,6 +164,19 @@ namespace CareProviderPortal
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
+            
+            //Equipment
+            configuration.CreateMap<CareProviderPortal.CCW.Equipments.Equipment, CareProviderPortal.CCW.Equipment.EquipmentDto>()
+                .ForMember(dto => dto.BrandAndModel, 
+                    options => options.MapFrom(e => string.IsNullOrEmpty(e.Brand) && string.IsNullOrEmpty(e.Model) 
+                        ? string.Empty 
+                        : $"{e.Brand} {e.Model}".Trim()))
+                .ForMember(dto => dto.CurrentLocation, 
+                    options => options.MapFrom(e => e.LocationId.ToString()));
+            
+            configuration.CreateMap<CareProviderPortal.CCW.Equipment.CreateEditEquipmentDto, CareProviderPortal.CCW.Equipments.Equipment>()
+                .ForMember(e => e.Id, options => options.Ignore());
+
         }
     }
 }

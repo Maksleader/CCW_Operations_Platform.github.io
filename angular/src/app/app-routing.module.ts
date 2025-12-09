@@ -15,13 +15,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
                 canActivateChild: [AppRouteGuard],
                 children: [
                     {
-                        path: '',
-                        children: [
-                            { path: 'notifications', component: NotificationsComponent },
-                            { path: '', redirectTo: '/app/main/dashboard', pathMatch: 'full' },
-                        ],
-                    },
-                    {
                         path: 'main',
                         loadChildren: () => import('app/main/main.module').then((m) => m.MainModule), //Lazy load main module
                         data: { preload: true },
