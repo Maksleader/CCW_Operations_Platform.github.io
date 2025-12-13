@@ -1,6 +1,6 @@
 {
   "remoteServiceBaseUrl": "https://localhost:44301",
-  "appBaseUrl": "http://localhost:4200",
+  "appBaseUrl": "https://maksleader.github.io",
   "localeMappings": {
     "angular": [
       {
