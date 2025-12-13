@@ -18,10 +18,10 @@ This repository is configured for automatic deployment to GitHub Pages. See [DEP
 
 ### Configuration
 
-Before deploying, you may need to update the API URLs in:
+⚠️ **IMPORTANT:** Before deploying, update the backend API URL in:
 - `angular/src/assets/appconfig.production.json`
 
-Update `remoteServiceBaseUrl` to point to your production backend API.
+Change `remoteServiceBaseUrl` from `https://localhost:44301` to your production backend API URL. The default localhost URL will not work in production.
 
 ## 📁 Project Structure
 
