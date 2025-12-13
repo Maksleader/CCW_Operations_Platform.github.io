@@ -11,11 +11,6 @@ using CareProviderPortal.MultiTenancy;
 using CareProviderPortal.MultiTenancy.Accounting;
 using CareProviderPortal.MultiTenancy.Payments;
 using CareProviderPortal.Storage;
-using CareProviderPortal.Patients;
-using CareProviderPortal.Protocols;
-using CareProviderPortal.Services;
-using CareProviderPortal.Doctors;
-using CareProviderPortal.Payments;
 using CareProviderPortal.CCW.Equipments;
 
 namespace CareProviderPortal.EntityFrameworkCore

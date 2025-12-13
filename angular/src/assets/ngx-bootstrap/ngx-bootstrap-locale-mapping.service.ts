@@ -4,7 +4,8 @@ export class NgxBootstrapLocaleMappingService {
             'zh-Hans': 'zh-cn',
             'es-MX': 'es',
             'vi': 'en-gb',
-            'ta': 'en-gb'
+            'ta': 'en-gb',
+            'az': 'en-gb'
             // Add more here
         };
 
@@ -25,7 +26,8 @@ export class NgxBootstrapLocaleMappingService {
             'es-MX': 'es',
             'pt-BR': 'ptBr',
             'vi': 'enGb',
-            'ta': 'enGb'
+            'ta': 'enGb',
+            'az': 'enGb'
             // Add more here
         };
 

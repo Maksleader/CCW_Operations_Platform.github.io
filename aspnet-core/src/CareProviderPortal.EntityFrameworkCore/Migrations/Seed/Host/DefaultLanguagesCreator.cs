@@ -32,6 +32,7 @@ namespace CareProviderPortal.Migrations.Seed.Host
                 new ApplicationLanguage(tenantId, "vi", "Tiếng Việt", "famfamfam-flags vn"),
                 new ApplicationLanguage(tenantId, "nl", "Dutch (Nederlands)", "famfamfam-flags nl"),
                 new ApplicationLanguage(tenantId, "th", "ภาษาไทย", "famfamfam-flags th"),
+                new ApplicationLanguage(tenantId, "az", "Azərbaycan dili", "famfamfam-flags az"),
             };
         }
 

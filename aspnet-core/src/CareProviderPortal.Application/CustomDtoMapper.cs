@@ -41,6 +41,7 @@ using CareProviderPortal.Notifications.Dto;
 using CareProviderPortal.Organizations.Dto;
 using CareProviderPortal.Sessions.Dto;
 using CareProviderPortal.WebHooks.Dto;
+using System;
 
 namespace CareProviderPortal
 {
@@ -173,6 +174,9 @@ namespace CareProviderPortal
                         : $"{e.Brand} {e.Model}".Trim()))
                 .ForMember(dto => dto.CurrentLocation, 
                     options => options.MapFrom(e => e.LocationId.ToString()));
+            
+            configuration.CreateMap<CareProviderPortal.CCW.Equipments.Equipment, CareProviderPortal.CCW.Equipment.CreateEditEquipmentDto>()
+                .ForMember(dto => dto.Id, options => options.MapFrom(e => (Guid?)e.Id));
             
             configuration.CreateMap<CareProviderPortal.CCW.Equipment.CreateEditEquipmentDto, CareProviderPortal.CCW.Equipments.Equipment>()
                 .ForMember(e => e.Id, options => options.Ignore());

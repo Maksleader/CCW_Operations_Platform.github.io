@@ -1,0 +1,204 @@
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'Equipment' | localize">
+        </sub-header>
+
+        <div [class]="containerClass">
+            <div class="card card-custom">
+                <div class="card-body">
+                    <form autocomplete="off" class="horizontal-form filter-form" (ngSubmit)="getEquipments()">
+                        <div class="form-body">
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="EquipmentNameFilterInput">{{ 'EquipmentName' | localize }}</label>
+                                        <input
+                                            [(ngModel)]="filters.equipmentName"
+                                            name="equipmentName"
+                                            id="EquipmentNameFilterInput"
+                                            class="form-control"
+                                            placeholder="{{ 'SearchWithThreeDot' | localize }}"
+                                            type="text"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="DivisionFilterInput">{{ 'Division' | localize }}</label>
+                                        <enum-select
+                                            [(ngModel)]="filters.division"
+                                            name="division"
+                                            [enumType]="equipmentDivision"
+                                            [placeholder]="l('All')"
+                                            [clearable]="true"
+                                            [multiple]="false"
+                                            [closeOnSelect]="true"
+                                        ></enum-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="OwnerFilterInput">{{ 'Owner' | localize }}</label>
+                                        <enum-select
+                                            [(ngModel)]="filters.owner"
+                                            name="owner"
+                                            [enumType]="equipmentOwner"
+                                            [placeholder]="l('All')"
+                                            [clearable]="true"
+                                            [multiple]="false"
+                                            [closeOnSelect]="true"
+                                        ></enum-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="StatusFilterInput">{{ 'Status' | localize }}</label>
+                                        <enum-select
+                                            [(ngModel)]="filters.status"
+                                            name="status"
+                                            [enumType]="equipmentStatus"
+                                            [placeholder]="l('All')"
+                                            [clearable]="true"
+                                            [multiple]="false"
+                                            [closeOnSelect]="true"
+                                        ></enum-select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-5 mb-5">
+                                <div class="col-xl-12 text-end">
+                                    <button
+                                        class="btn btn-light-primary me-2"
+                                        (click)="clearFilters()"
+                                        type="button"
+                                    >
+                                        <i class="fa fa-redo btn-md-icon"></i>
+                                        <span class="d-none d-md-inline-block">
+                                            {{ 'Clear' | localize }}
+                                        </span>
+                                    </button>
+                                    <button name="RefreshButton" class="btn btn-primary" type="submit">
+                                        <i class="fa fa-sync btn-md-icon"></i>
+                                        <span class="d-none d-md-inline-block">
+                                            {{ 'Refresh' | localize }}
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row mb-3">
+                        <div class="col-12 text-end">
+                            <button type="button" class="btn btn-primary" (click)="createEquipment()">
+                                <i class="fa fa-plus"></i>
+                                <span>{{ 'Create' | localize }}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <!--<Primeng-TurboTable-Start>-->
+                        <div class="col primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
+                            <p-table
+                                #dataTable
+                                sortMode="multiple"
+                                (onLazyLoad)="getEquipments($event)"
+                                [value]="primengTableHelper.records"
+                                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                                [paginator]="false"
+                                [lazy]="true"
+                                [scrollable]="true"
+                                ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="min-width: 200px" pSortableColumn="name">
+                                            {{ 'Name' | localize }}
+                                            <p-sortIcon field="name"></p-sortIcon>
+                                        </th>
+                                        <th style="min-width: 200px" pSortableColumn="brandAndModel">
+                                            {{ 'BrandAndModel' | localize }}
+                                            <p-sortIcon field="brandAndModel"></p-sortIcon>
+                                        </th>
+                                        <th style="min-width: 150px" pSortableColumn="division">
+                                            {{ 'Division' | localize }}
+                                            <p-sortIcon field="division"></p-sortIcon>
+                                        </th>
+                                        <th style="min-width: 120px" pSortableColumn="owner">
+                                            {{ 'Owner' | localize }}
+                                            <p-sortIcon field="owner"></p-sortIcon>
+                                        </th>
+                                        <th style="min-width: 120px" pSortableColumn="status">
+                                            {{ 'Status' | localize }}
+                                            <p-sortIcon field="status"></p-sortIcon>
+                                        </th>
+                                        <th style="min-width: 200px" pSortableColumn="currentLocation">
+                                            {{ 'CurrentLocation' | localize }}
+                                            <p-sortIcon field="currentLocation"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+                                    <tr>
+                                        <td>
+                                            <span class="p-column-title">{{ 'Name' | localize }}</span>
+                                            {{ record.name }}
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'BrandAndModel' | localize }}</span>
+                                            {{ record.brandAndModel }}
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'Division' | localize }}</span>
+                                            {{ record.division | equipmentDivision }}
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'Owner' | localize }}</span>
+                                            {{ record.owner | equipmentOwner }}
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'Status' | localize }}</span>
+                                            <span class="badge" [ngClass]="record.status | equipmentStatusClass">
+                                                {{ record.status | equipmentStatus }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">{{ 'CurrentLocation' | localize }}</span>
+                                            {{ record.currentLocation }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{ 'NoData' | localize }}
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator
+                                    [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                    #paginator
+                                    (onPageChange)="getEquipments($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                    [showCurrentPageReport]="true"
+                                    [currentPageReportTemplate]="
+                                        'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
+                                    "
+                                ></p-paginator>
+                            </div>
+                        </div>
+                        <!--<Primeng-TurboTable-End>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<create-or-edit-equipment-modal #createOrEditEquipmentModal (modalSave)="getEquipments()"></create-or-edit-equipment-modal>

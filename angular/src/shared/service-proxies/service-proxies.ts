@@ -4867,6 +4867,286 @@ export class EditionServiceProxy {
 }
 
 @Injectable()
+export class EquipmentServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    retrieveEquipments(body: EquipmentInput | undefined): Observable<PagedResultDtoOfEquipmentDto> {
+        let url_ = this.baseUrl + "/api/services/app/Equipment/RetrieveEquipments";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRetrieveEquipments(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRetrieveEquipments(<any>response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfEquipmentDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfEquipmentDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRetrieveEquipments(response: HttpResponseBase): Observable<PagedResultDtoOfEquipmentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfEquipmentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PagedResultDtoOfEquipmentDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getEquipmentForEdit(id: string | undefined): Observable<CreateEditEquipmentDto> {
+        let url_ = this.baseUrl + "/api/services/app/Equipment/GetEquipmentForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEquipmentForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEquipmentForEdit(<any>response_);
+                } catch (e) {
+                    return <Observable<CreateEditEquipmentDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CreateEditEquipmentDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEquipmentForEdit(response: HttpResponseBase): Observable<CreateEditEquipmentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CreateEditEquipmentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CreateEditEquipmentDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createEquipment(body: CreateEditEquipmentDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Equipment/CreateEquipment";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateEquipment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateEquipment(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateEquipment(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    updateEquipment(body: CreateEditEquipmentDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Equipment/UpdateEquipment";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateEquipment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateEquipment(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateEquipment(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    deleteEquipment(id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Equipment/DeleteEquipment?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteEquipment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteEquipment(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteEquipment(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class FriendshipServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -16179,6 +16459,78 @@ export interface IComboboxItemDto {
     isSelected: boolean;
 }
 
+export class CreateEditEquipmentDto implements ICreateEditEquipmentDto {
+    id!: string | undefined;
+    name!: string;
+    brand!: string | undefined;
+    model!: string | undefined;
+    serialNumber!: string | undefined;
+    division!: EquipmentDivision;
+    owner!: EquipmentOwner;
+    status!: EquipmentStatus;
+    locationId!: number;
+    description!: string | undefined;
+
+    constructor(data?: ICreateEditEquipmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.brand = _data["brand"];
+            this.model = _data["model"];
+            this.serialNumber = _data["serialNumber"];
+            this.division = _data["division"];
+            this.owner = _data["owner"];
+            this.status = _data["status"];
+            this.locationId = _data["locationId"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): CreateEditEquipmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateEditEquipmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["brand"] = this.brand;
+        data["model"] = this.model;
+        data["serialNumber"] = this.serialNumber;
+        data["division"] = this.division;
+        data["owner"] = this.owner;
+        data["status"] = this.status;
+        data["locationId"] = this.locationId;
+        data["description"] = this.description;
+        return data; 
+    }
+}
+
+export interface ICreateEditEquipmentDto {
+    id: string | undefined;
+    name: string;
+    brand: string | undefined;
+    model: string | undefined;
+    serialNumber: string | undefined;
+    division: EquipmentDivision;
+    owner: EquipmentOwner;
+    status: EquipmentStatus;
+    locationId: number;
+    description: string | undefined;
+}
+
 export class CreateEditionDto implements ICreateEditionDto {
     edition!: EditionCreateDto;
     featureValues!: NameValueDto[];
@@ -18105,6 +18457,148 @@ export interface IEntityPropertyChangeDto {
     propertyTypeFullName: string | undefined;
     tenantId: number | undefined;
     id: number;
+}
+
+export enum EquipmentDivision {
+    Cleaning = 1,
+    Waste = 2,
+    Catering = 3,
+    FB = 4,
+    AdminAndSupplyChain = 5,
+    Others = 6,
+}
+
+export class EquipmentDto implements IEquipmentDto {
+    name!: string | undefined;
+    brandAndModel!: string | undefined;
+    division!: EquipmentDivision;
+    owner!: EquipmentOwner;
+    status!: EquipmentStatus;
+    currentLocation!: string | undefined;
+    id!: string;
+
+    constructor(data?: IEquipmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.brandAndModel = _data["brandAndModel"];
+            this.division = _data["division"];
+            this.owner = _data["owner"];
+            this.status = _data["status"];
+            this.currentLocation = _data["currentLocation"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): EquipmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EquipmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["brandAndModel"] = this.brandAndModel;
+        data["division"] = this.division;
+        data["owner"] = this.owner;
+        data["status"] = this.status;
+        data["currentLocation"] = this.currentLocation;
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IEquipmentDto {
+    name: string | undefined;
+    brandAndModel: string | undefined;
+    division: EquipmentDivision;
+    owner: EquipmentOwner;
+    status: EquipmentStatus;
+    currentLocation: string | undefined;
+    id: string;
+}
+
+export class EquipmentInput implements IEquipmentInput {
+    equipmentName!: string | undefined;
+    division!: EquipmentDivision;
+    owner!: EquipmentOwner;
+    status!: EquipmentStatus;
+    sorting!: string | undefined;
+    skipCount!: number;
+    maxResultCount!: number;
+
+    constructor(data?: IEquipmentInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.equipmentName = _data["equipmentName"];
+            this.division = _data["division"];
+            this.owner = _data["owner"];
+            this.status = _data["status"];
+            this.sorting = _data["sorting"];
+            this.skipCount = _data["skipCount"];
+            this.maxResultCount = _data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): EquipmentInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new EquipmentInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["equipmentName"] = this.equipmentName;
+        data["division"] = this.division;
+        data["owner"] = this.owner;
+        data["status"] = this.status;
+        data["sorting"] = this.sorting;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+}
+
+export interface IEquipmentInput {
+    equipmentName: string | undefined;
+    division: EquipmentDivision;
+    owner: EquipmentOwner;
+    status: EquipmentStatus;
+    sorting: string | undefined;
+    skipCount: number;
+    maxResultCount: number;
+}
+
+export enum EquipmentOwner {
+    Vendor = 1,
+    WFU13 = 2,
+    Venue = 3,
+}
+
+export enum EquipmentStatus {
+    InStorage = 1,
+    OnSite = 2,
+    Removed = 3,
+    Broken = 4,
 }
 
 export class ExpiringTenant implements IExpiringTenant {
@@ -24053,6 +24547,54 @@ export class PagedResultDtoOfEntityChangeListDto implements IPagedResultDtoOfEnt
 export interface IPagedResultDtoOfEntityChangeListDto {
     totalCount: number;
     items: EntityChangeListDto[] | undefined;
+}
+
+export class PagedResultDtoOfEquipmentDto implements IPagedResultDtoOfEquipmentDto {
+    totalCount!: number;
+    items!: EquipmentDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfEquipmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(EquipmentDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfEquipmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfEquipmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IPagedResultDtoOfEquipmentDto {
+    totalCount: number;
+    items: EquipmentDto[] | undefined;
 }
 
 export class PagedResultDtoOfGetAllSendAttemptsOutput implements IPagedResultDtoOfGetAllSendAttemptsOutput {

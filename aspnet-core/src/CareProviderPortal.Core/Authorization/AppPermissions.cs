@@ -76,6 +76,12 @@
         public const string Pages_Administration_MassNotification = "Pages.Administration.MassNotification";
         public const string Pages_Administration_MassNotification_Create = "Pages.Administration.MassNotification.Create";
 
+        //EQUIPMENT PERMISSIONS
+        public const string Pages_Equipment = "Pages.Equipment";
+        public const string Pages_Equipment_Create = "Pages.Equipment.Create";
+        public const string Pages_Equipment_Edit = "Pages.Equipment.Edit";
+        public const string Pages_Equipment_Delete = "Pages.Equipment.Delete";
+
         //TENANT-SPECIFIC PERMISSIONS
 
         public const string Pages_Tenant_Dashboard = "Pages.Tenant.Dashboard";

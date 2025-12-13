@@ -7,9 +7,9 @@ namespace CareProviderPortal.CCW.Equipment
 {
     public interface IEquipmentAppService : IApplicationService
     {
-        Task<PagedResultDto<EquipmentDto>> GetEquipments(EquipmentInput input);
+        Task<PagedResultDto<EquipmentDto>> RetrieveEquipments(EquipmentInput input);
         
-        Task<EquipmentDto> GetEquipmentForEdit(Guid id);
+        Task<CreateEditEquipmentDto> GetEquipmentForEdit(Guid id);
         
         Task CreateEquipment(CreateEditEquipmentDto input);
         

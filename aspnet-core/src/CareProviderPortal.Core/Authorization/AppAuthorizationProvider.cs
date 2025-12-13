@@ -94,6 +94,12 @@ namespace CareProviderPortal.Authorization
             var massNotification = administration.CreateChildPermission(AppPermissions.Pages_Administration_MassNotification, L("MassNotifications"));
             massNotification.CreateChildPermission(AppPermissions.Pages_Administration_MassNotification_Create, L("MassNotificationCreate"));
             
+            //EQUIPMENT PERMISSIONS
+            var equipment = pages.CreateChildPermission(AppPermissions.Pages_Equipment, L("Equipment"));
+            equipment.CreateChildPermission(AppPermissions.Pages_Equipment_Create, L("Create"));
+            equipment.CreateChildPermission(AppPermissions.Pages_Equipment_Edit, L("Edit"));
+            equipment.CreateChildPermission(AppPermissions.Pages_Equipment_Delete, L("Delete"));
+
             //TENANT-SPECIFIC PERMISSIONS
 
             pages.CreateChildPermission(AppPermissions.Pages_Tenant_Dashboard, L("Dashboard"), multiTenancySides: MultiTenancySides.Tenant);

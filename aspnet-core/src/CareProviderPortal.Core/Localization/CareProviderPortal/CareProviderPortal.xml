@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
     <text name="HomePage">Home page</text>
@@ -1143,7 +1143,7 @@
     <text name="WhatsIncludedInYourPlan">What's included in your plan</text>
     <text name="NoFeaturesInYourPlan">There is no feature in your plan!</text>
     <text name="YourPlan">Your Plan</text>
-    <text name="WebhookPageInfo">Webhooks allow external services to be notified when certain events happen. When the specified events happen, we’ll send a POST request to each of the URLs you provide.</text>
+    <text name="WebhookPageInfo">Webhooks allow external services to be notified when certain events happen. When the specified events happen, we�ll send a POST request to each of the URLs you provide.</text>
     <text name="UiCustomization_DarkMode">Dark Mode</text>
     <text name="Theme_Theme13">Theme 13</text>
     <text name="EnableCheckingLastXPasswordWhenPasswordChangeSettingLabel">Prevented user's new password from being the same as any of the last x passwords</text>
@@ -1192,5 +1192,7 @@
     <text name="MassNotificationNoUsersFoundInOrganizationUnitMessage">There is no user in the selected organization units. You should at least select one user or organization unit contains user to send mass notification.</text>
     <text name="MassNotificationUserOrOrganizationUnitFieldIsRequiredMessage">Please select a user or organization unit to send a mass notification!</text>
     <text name="MassNotificationMessageFieldIsRequiredMessage">Please write a message!</text>
-  </texts>
+    <text name="Create">Create</text>
+</texts>
 </localizationDictionary>
+

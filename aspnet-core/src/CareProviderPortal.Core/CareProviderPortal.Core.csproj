@@ -36,6 +36,7 @@
     <PackageReference Include="Twilio" Version="5.75.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CareProviderPortal.Application.Shared\CareProviderPortal.Application.Shared.csproj" />
     <ProjectReference Include="..\CareProviderPortal.Core.Shared\CareProviderPortal.Core.Shared.csproj" />
   </ItemGroup>
 </Project>
